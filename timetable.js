@@ -1,5 +1,6 @@
 document.getElementById("test").onclick = testFunc;
 
 function testFunc() {
-  alert("test")
+  var text = prompt("Whats your name? ")
+  alert(text)
 }
