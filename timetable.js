@@ -32,6 +32,7 @@ function formatToCookie(cookie) {
   var cookie_string = "";
   for (var slot = 0; slot < cookie.length; slot++) {
     var slot_string = `${cookie[slot].id}${cookie[slot].subject}${cookie[slot].teacher}${cookie[slot].class}`;
-    var cookie_string = `${cookie_string}${slot_string}`;
+    cookie_string = `${cookie_string}${slot_string}`;
   }
   return cookie_string;
+}
