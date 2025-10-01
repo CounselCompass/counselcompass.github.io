@@ -1,20 +1,20 @@
 document.getElementById("test").onclick = testFunc;
 
 function testFunc() {
-  alert(formatToCookie({
-{
-    "id": "0900MON",
-    "subject": "MAT",
-    "teacher": "EXA",
-    "class": "T14"
-},
+  alert(formatToCookie([
     {
-    "id": "0940MON",
-    "subject": "ENG",
-    "teacher": "EXP",
-    "class": "H05"
-}
-  }));
+      "id": "0900MON",
+      "subject": "MAT",
+      "teacher": "EXA",
+      "class": "T14"
+    },
+    {
+      "id": "0940MON",
+      "subject": "ENG",
+      "teacher": "EXP",
+      "class": "H05"
+    }
+  ]));
   // document.cookie = `username=${text}; expires=Wed, 1 Jul 2026 12:00:00 UTC`;
 }
 
