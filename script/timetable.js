@@ -48,7 +48,7 @@ function formatToJSON(cookie) {
   for (var current_class = 0; current_class < into_classes.length; current_class++) {
     cookie_json[current_class].id = into_classes[current_class].substring(0,7);
     cookie_json[current_class].subject = into_classes[current_class].substring(7,10);
-    cookie_json[current_class].teacher = into_classes[current_class].substring(12,13);
+    cookie_json[current_class].teacher = into_classes[current_class].substring(10,13);
     cookie_json[current_class].class = into_classes[current_class].substring(13,16);
   }
   return cookie_json;
