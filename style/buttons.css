@@ -24,6 +24,8 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  width: 150px;
+  height: 50px;
 }
 
 .button-79:disabled {
