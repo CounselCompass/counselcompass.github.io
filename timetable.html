@@ -1,88 +1,120 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="script/timetable.js" defer></script>
-    <link rel="stylesheet" href="style/buttons.css">
-  </head>
-  <body>
-<button class="button-79" role="button"></button> <button class="button-79" role="button">Monday</button> <button class="button-79" role="button">Tuesday</button> <button class="button-79" role="button">Wednesday</button> <button class="button-79" role="button">Thursday</button> <button class="button-79" role="button">Friday</button><br>
-<button class="button-79" role="button">09:00</button>
-<button class="button-79" role="button" id="test">Monday</button>
-<button class="button-79" role="button" id="test">Tuesday</button>
-<button class="button-79" role="button" id="test">Wednesday</button>
-<button class="button-79" role="button" id="test">Thursday</button>
-<button class="button-79" role="button" id="test">Friday</button><br>
+<head>
+  <link rel="stylesheet" href="style/buttons.css">
+  <style>
+    .timetable {
+      display: grid;
+      grid-template-columns: 150px repeat(5, 150px); /* time column + 5 weekdays */
+      gap: 5px;
+      padding: 20px;
+    }
 
-<button class="button-79" role="button">09:40</button>
-<button class="button-79" role="button" id="test">Monday</button>
-<button class="button-79" role="button" id="test">Tuesday</button>
-<button class="button-79" role="button" id="test">Wednesday</button>
-<button class="button-79" role="button" id="test">Thursday</button>
-<button class="button-79" role="button" id="test">Friday</button><br>
+    .timetable .header {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
 
-<button class="button-79" role="button">10:20</button>
-<button class="button-79" role="button" id="test">Monday</button>
-<button class="button-79" role="button" id="test">Tuesday</button>
-<button class="button-79" role="button" id="test">Wednesday</button>
-<button class="button-79" role="button" id="test">Thursday</button>
-<button class="button-79" role="button" id="test">Friday</button><br>
+  <div class="timetable">
+    <!-- Header Row -->
+    <div></div>
+    <button class="button-79 header" role="button">Monday</button>
+    <button class="button-79 header" role="button">Tuesday</button>
+    <button class="button-79 header" role="button">Wednesday</button>
+    <button class="button-79 header" role="button">Thursday</button>
+    <button class="button-79 header" role="button">Friday</button>
 
-<button class="button-79" role="button">10:40</button>
-<button class="button-79" role="button" id="test">Monday</button>
-<button class="button-79" role="button" id="test">Tuesday</button>
-<button class="button-79" role="button" id="test">Wednesday</button>
-<button class="button-79" role="button" id="test">Thursday</button>
-<button class="button-79" role="button" id="test">Friday</button><br>
+    <!-- 09:00 row -->
+    <button class="button-79" role="button">09:00</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
 
-<button class="button-79" role="button">11:20</button>
-<button class="button-79" role="button" id="test">Monday</button>
-<button class="button-79" role="button" id="test">Tuesday</button>
-<button class="button-79" role="button" id="test">Wednesday</button>
-<button class="button-79" role="button" id="test">Thursday</button>
-<button class="button-79" role="button" id="test">Friday</button><br>
+    <!-- 09:40 row -->
+    <button class="button-79" role="button">09:40</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
 
-<button class="button-79" role="button">12:00</button>
-<button class="button-79" role="button" id="test">Monday</button>
-<button class="button-79" role="button" id="test">Tuesday</button>
-<button class="button-79" role="button" id="test">Wednesday</button>
-<button class="button-79" role="button" id="test">Thursday</button>
-<button class="button-79" role="button" id="test">Friday</button><br>
+    <!-- 10:20 row -->
+    <button class="button-79" role="button">10:20</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
 
-<button class="button-79" role="button">12:40</button>
-<button class="button-79" role="button" id="test">Monday</button>
-<button class="button-79" role="button" id="test">Tuesday</button>
-<button class="button-79" role="button" id="test">Wednesday</button>
-<button class="button-79" role="button" id="test">Thursday</button>
-<button class="button-79" role="button" id="test">Friday</button><br>
+    <!-- 10:40 row -->
+    <button class="button-79" role="button">10:40</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
 
-<button class="button-79" role="button">13:20</button>
-<button class="button-79" role="button" id="test">Monday</button>
-<button class="button-79" role="button" id="test">Tuesday</button>
-<button class="button-79" role="button" id="test">Wednesday</button>
-<button class="button-79" role="button" id="test">Thursday</button>
-<button class="button-79" role="button" id="test">Friday</button><br>
+    <!-- 11:20 row -->
+    <button class="button-79" role="button">11:20</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
 
-<button class="button-79" role="button">14:00</button>
-<button class="button-79" role="button" id="test">Monday</button>
-<button class="button-79" role="button" id="test">Tuesday</button>
-<button class="button-79" role="button" id="test">Wednesday</button>
-<button class="button-79" role="button" id="test">Thursday</button>
-<button class="button-79" role="button" id="test">Friday</button><br>
+    <!-- 12:00 row -->
+    <button class="button-79" role="button">12:00</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
 
-<button class="button-79" role="button">14:40</button>
-<button class="button-79" role="button" id="test">Monday</button>
-<button class="button-79" role="button" id="test">Tuesday</button>
-<button class="button-79" role="button" id="test">Wednesday</button>
-<button class="button-79" role="button" id="test">Thursday</button>
-<button class="button-79" role="button" id="test">Friday</button><br>
+    <!-- 12:40 row -->
+    <button class="button-79" role="button">12:40</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
 
-<button class="button-79" role="button">15:20</button>
-<button class="button-79" role="button" id="test">Monday</button>
-<button class="button-79" role="button" id="test">Tuesday</button>
-<button class="button-79" role="button" id="test">Wednesday</button>
-<button class="button-79" role="button" id="test">Thursday</button>
-<button class="button-79" role="button" id="test">Friday</button><br>
+    <!-- 13:20 row -->
+    <button class="button-79" role="button">13:20</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
 
+    <!-- 14:00 row -->
+    <button class="button-79" role="button">14:00</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
 
-  </body>
+    <!-- 14:40 row -->
+    <button class="button-79" role="button">14:40</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+
+    <!-- 15:20 row -->
+    <button class="button-79" role="button">15:20</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+    <button class="button-79" role="button">-</button>
+  </div>
+
+  <script src="script/timetable.js" defer></script>
+</body>
 </html>
