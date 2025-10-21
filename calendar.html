@@ -1,6 +1,71 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <img src="images/calendar_for_website.jpg" width="1024" height="792">
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>School Calendar with Countdown</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f9f9f9;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #countdown {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2823b5;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 480px) {
+      #countdown {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="countdown">Loading countdown...</div>
+
+  <img src="images/calendar_for_website.jpg" alt="School Calendar" />
+
+  <script>
+    function updateCountdown() {
+      const countdownElem = document.getElementById('countdown');
+      const today = new Date();
+      const currentYear = today.getFullYear();
+      const targetDate = new Date(currentYear, 11, 22); // December is month 11 (zero-based)
+
+      // If today is after Dec 22, count down to next year's Dec 22
+      if (today > targetDate) {
+        targetDate.setFullYear(currentYear + 1);
+      }
+
+      // Calculate difference in days
+      const diffTime = targetDate - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      countdownElem.textContent = `Days until December 22: ${diffDays}`;
+    }
+
+    updateCountdown();
+
+    // Optional: update every day at midnight
+    // But for now, it's enough to update on page load
+  </script>
+</body>
 </html>
