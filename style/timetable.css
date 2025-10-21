@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;  /* horizontal center */
+  align-items: center;      /* vertical center */
+  background-color: #f5f5f5; /* optional: background color */
+}
+
+.timetable {
+  display: grid;
+  grid-template-columns: 150px repeat(5, 150px); /* time column + 5 weekdays */
+  gap: 5px;
+  padding: 20px;
+  background-color: #ffffff; /* optional: background for contrast */
+  border-radius: 10px;       /* optional: rounded corners */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* optional: soft shadow */
+  justify-content: center;
+}
