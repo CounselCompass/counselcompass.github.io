@@ -1,5 +1,34 @@
 document.getElementById("test").onclick = testFunc;
 
+// Chat GPT start
+function updateCountdown() {
+  const countdownEl = document.getElementById('countdown');
+  const now = new Date();
+  
+  // Target date: December 25th (Christmas)
+  const year = now.getFullYear();
+  const target = new Date(year, 11, 25); // Dec 25
+  
+  // If today is past Dec 25, countdown to next year's Dec 25
+  if (now > target) {
+    target.setFullYear(year + 1);
+  }
+  
+  const diff = target - now; // difference in ms
+  
+  // Calculate days left (rounded down)
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  
+  countdownEl.textContent = `${days} day${days !== 1 ? 's' : ''} to Christmas`;
+}
+
+// Update every 1 hour (since days don’t change every second)
+setInterval(updateCountdown, 3600000);
+updateCountdown();
+
+// Chat GPT end
+
+
 function testFunc() {
   alert(formatToCookie([
     {
