@@ -9,63 +9,81 @@
       margin: 0;
       padding: 20px;
       background: #f9f9f9;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-
-    #countdown {
-      font-size: 24px;
-      font-weight: bold;
-      color: #2823b5;
-      margin-bottom: 15px;
-      text-align: center;
+      color: #333;
     }
 
     img {
       max-width: 100%;
       height: auto;
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    #countdown {
+      font-size: 20px;
+      font-weight: 600;
+      color: #2823b5;
+      background: #e0e7ff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(40, 35, 181, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 320px;
+      justify-content: center;
+    }
+
+    #countdown .emoji {
+      font-size: 26px;
     }
 
     @media (max-width: 480px) {
       #countdown {
-        font-size: 20px;
+        font-size: 18px;
+        max-width: 100%;
+        padding: 10px 15px;
+      }
+      #countdown .emoji {
+        font-size: 22px;
       }
     }
   </style>
 </head>
 <body>
 
-  <div id="countdown">Loading countdown...</div>
-
   <img src="images/calendar_for_website.jpg" alt="School Calendar" />
+
+  <div id="countdown">
+    <span class="emoji" aria-hidden="true">🎅</span>
+    <span id="countdown-text">Loading countdown...</span>
+  </div>
 
   <script>
     function updateCountdown() {
-      const countdownElem = document.getElementById('countdown');
+      const countdownText = document.getElementById('countdown-text');
       const today = new Date();
       const currentYear = today.getFullYear();
-      const targetDate = new Date(currentYear, 11, 22); // December is month 11 (zero-based)
+      let targetDate = new Date(currentYear, 11, 22); // Dec 22
 
-      // If today is after Dec 22, count down to next year's Dec 22
+      // If past Dec 22, count down to next year's Dec 22
       if (today > targetDate) {
-        targetDate.setFullYear(currentYear + 1);
+        targetDate = new Date(currentYear + 1, 11, 22);
       }
 
-      // Calculate difference in days
       const diffTime = targetDate - today;
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-      countdownElem.textContent = `Days until December 22: ${diffDays}`;
+      countdownText.textContent = `Days until December 22: ${diffDays}`;
     }
 
     updateCountdown();
-
-    // Optional: update every day at midnight
-    // But for now, it's enough to update on page load
   </script>
 </body>
 </html>
+
