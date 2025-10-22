@@ -35,8 +35,9 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      max-width: 320px;
+      max-width: 360px;
       justify-content: center;
+      text-align: center;
     }
 
     #countdown .emoji {
@@ -57,32 +58,39 @@
 </head>
 <body>
 
-  <img src="images/calendar_for_website.jpg" alt="School Calendar" />
+  <img src="images/calendar_for_website.jpg" alt="School calendar with academic year dates" />
 
   <div id="countdown">
-    <span class="emoji" aria-hidden="true">🎅</span>
+    <span class="emoji" role="img" aria-label="Santa">🎅</span>
     <span id="countdown-text">Loading countdown...</span>
   </div>
 
   <script>
     function updateCountdown() {
       const countdownText = document.getElementById('countdown-text');
-      const today = new Date();
-      const currentYear = today.getFullYear();
-      let targetDate = new Date(currentYear, 11, 22); // Dec 22
+      const now = new Date();
 
-      // If past Dec 22, count down to next year's Dec 22
-      if (today > targetDate) {
-        targetDate = new Date(currentYear + 1, 11, 22);
+      const currentYear = now.getUTCFullYear();
+      let targetDate = new Date(Date.UTC(currentYear, 11, 20, 16, 0, 0)); // Dec 20, 4:00 PM GMT
+
+      // If it's past the target date this year, use next year
+      if (now > targetDate) {
+        targetDate = new Date(Date.UTC(currentYear + 1, 11, 20, 16, 0, 0));
       }
 
-      const diffTime = targetDate - today;
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      const totalSeconds = Math.floor((targetDate - now) / 1000);
 
-      countdownText.textContent = `Days until December 22: ${diffDays}`;
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      countdownText.textContent = 
+        `Days until Christmas Break: ${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
 
     updateCountdown();
+    setInterval(updateCountdown, 1000); // Update every second
   </script>
 </body>
 </html>
