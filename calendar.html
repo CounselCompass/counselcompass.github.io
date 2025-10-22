@@ -9,7 +9,7 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: #f9f9f9;
+      background: #2823b5; /* 🔵 Dark blue background */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
@@ -28,7 +28,6 @@
       align-items: center;
       width: 100%;
       max-width: 1000px;
-      flex: 1;
       justify-content: center;
       gap: 20px;
     }
@@ -37,17 +36,19 @@
       width: 100%;
       height: auto;
       border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background-color: white; /* Ensures visibility on dark background */
+      padding: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     #countdown {
       font-size: 20px;
       font-weight: 600;
-      color: #2823b5;
-      background: #e0e7ff;
+      color: #222; /* Dark text */
+      background: #ffffff; /* White background for contrast */
       padding: 16px 24px;
       border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(40, 35, 181, 0.2);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -74,7 +75,9 @@
   </style>
 </head>
 <body>
+
   <div class="container">
+    <!-- Replace with your actual image path -->
     <img src="images/calendar_for_website.jpg" alt="School calendar with academic year dates" />
 
     <div id="countdown">
@@ -89,7 +92,7 @@
       const now = new Date();
 
       const currentYear = now.getUTCFullYear();
-      // Dec 20, 1:20 PM GMT
+      // 🎄 Dec 20, 1:20 PM GMT
       let targetDate = new Date(Date.UTC(currentYear, 11, 20, 13, 20, 0));
 
       if (now > targetDate) {
