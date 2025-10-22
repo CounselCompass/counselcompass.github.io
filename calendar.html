@@ -1,116 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>School Calendar with Countdown</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #f9f9f9;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #2596be; /* Updated background color */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      box-sizing: border-box;
-    }
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 1000px;
-      flex: 1;
-      justify-content: center;
-      gap: 20px;
-    }
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px;
+    flex: 1;
+    justify-content: center;
+    gap: 20px;
+  }
 
-    img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
 
+  #countdown {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2823b5;
+    background: #e0e7ff;
+    padding: 16px 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(40, 35, 181, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  #countdown .emoji {
+    font-size: 26px;
+  }
+
+  @media (max-width: 480px) {
     #countdown {
-      font-size: 20px;
-      font-weight: 600;
-      color: #2823b5;
-      background: #e0e7ff;
-      padding: 16px 24px;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(40, 35, 181, 0.2);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      max-width: 100%;
-      text-align: center;
-      justify-content: center;
+      font-size: 18px;
+      padding: 12px 16px;
     }
 
     #countdown .emoji {
-      font-size: 26px;
+      font-size: 22px;
     }
+  }
+</style>
 
-    @media (max-width: 480px) {
-      #countdown {
-        font-size: 18px;
-        padding: 12px 16px;
-      }
-
-      #countdown .emoji {
-        font-size: 22px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <img src="images/calendar_for_website.jpg" alt="School calendar with academic year dates" />
-
-    <div id="countdown">
-      <span class="emoji" role="img" aria-label="Santa">🎅</span>
-      <span id="countdown-text">Loading countdown...</span>
-    </div>
-  </div>
-
-  <script>
-    function updateCountdown() {
-      const countdownText = document.getElementById('countdown-text');
-      const now = new Date();
-
-      const currentYear = now.getUTCFullYear();
-      // Dec 20, 1:20 PM GMT
-      let targetDate = new Date(Date.UTC(currentYear, 11, 20, 13, 20, 0));
-
-      if (now > targetDate) {
-        targetDate = new Date(Date.UTC(currentYear + 1, 11, 20, 13, 20, 0));
-      }
-
-      const totalSeconds = Math.floor((targetDate - now) / 1000);
-
-      const days = Math.floor(totalSeconds / 86400);
-      const hours = Math.floor((totalSeconds % 86400) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-
-      countdownText.textContent =
-        `Days until Christmas Break: ${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  </script>
-</body>
-</html>
 
 
