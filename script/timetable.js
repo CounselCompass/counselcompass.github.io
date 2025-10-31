@@ -1,46 +1,27 @@
-// ====== Timetable Cookie Management ======
-const cookieName = "timetable_schedule";
+const storageKey = "timetable_schedule";
 
-// --- Load and decode saved schedule ---
-function loadScheduleFromCookie() {
-  const nameEQ = cookieName + "=";
-  const cookies = document.cookie.split(';');
-  for (let c of cookies) {
-    c = c.trim();
-    if (c.indexOf(nameEQ) === 0) {
-      const value = c.substring(nameEQ.length);
-      try {
-        const decoded = decodeURIComponent(escape(atob(value)));
-        const parsed = JSON.parse(decoded);
-        console.log("✅ Loaded schedule from cookie:", parsed);
-        return parsed;
-      } catch (err) {
-        console.error("❌ Failed to decode or parse cookie:", err);
-        return null;
-      }
-    }
+// --- Load from localStorage ---
+function loadScheduleFromStorage() {
+  const data = localStorage.getItem(storageKey);
+  if (!data) return null;
+  try {
+    const parsed = JSON.parse(data);
+    console.log("✅ Loaded schedule from storage:", parsed);
+    return parsed;
+  } catch (err) {
+    console.error("❌ Failed to parse stored schedule:", err);
+    return null;
   }
-  return null;
 }
 
-function saveScheduleToCookie(schedule) {
+// --- Save to localStorage ---
+function saveScheduleToStorage(schedule) {
   try {
-    const now = new Date();
-    const thisYear = now.getFullYear();
-    let expireDate = new Date(`${thisYear}-08-01T00:00:00`);
-    if (now > expireDate) expireDate = new Date(`${thisYear + 1}-08-01T00:00:00`);
-
-    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(schedule))));
-
-    // Try without Secure, use SameSite=Lax for local + GitHub compatibility
-    document.cookie = `${cookieName}=${encoded}; expires=${expireDate.toUTCString()}; path=/; SameSite=Lax`;
-
-    console.log("✅ Saved schedule to cookie:", schedule);
+    localStorage.setItem(storageKey, JSON.stringify(schedule));
+    console.log("✅ Saved schedule to storage:", schedule);
   } catch (err) {
-    console.error("❌ Failed to save cookie:", err);
+    console.error("❌ Failed to save schedule:", err);
   }
-
-  console.log("🍪 Raw document.cookie:", document.cookie);
 }
 
 
@@ -91,14 +72,13 @@ function applySchedule(schedule) {
   });
 }
 
-// --- Run on page load ---
 document.addEventListener("DOMContentLoaded", () => {
-  let schedule = loadScheduleFromCookie();
+  let schedule = loadScheduleFromStorage();
 
   if (!schedule) {
-    console.log("⚠️ No existing cookie found. Creating new schedule...");
-    schedule = initCookie();
-    saveScheduleToCookie(schedule);
+    console.log("⚠️ No existing schedule found. Creating new one...");
+    schedule = initCookie();  // still fine to call it that
+    saveScheduleToStorage(schedule);
   }
 
   applySchedule(schedule);
