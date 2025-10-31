@@ -85,3 +85,9 @@
     padding: 10px;
   }
 }
+
+#popup-content #save-slot {
+  align-self: center;
+  width: 60%;
+  text-align: center;
+}

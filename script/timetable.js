@@ -8,6 +8,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const times = ["0900","0940","1020","1040","1120","1200","1240","1320","1400","1440","1520"];
   const dayNames = { MON: "Monday", TUE: "Tuesday", WED: "Wednesday", THU: "Thursday", FRI: "Friday" };
 
+  function loadScheduleFromCookie() {
+  const nameEQ = cookieName + "=";
+  const ca = document.cookie.split(';');
+  for (let c of ca) {
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) {
+      const value = c.substring(nameEQ.length, c.length);
+      try {
+        return JSON.parse(decodeURIComponent(escape(atob(value))));
+      } catch (err) {
+        console.error("❌ Failed to decode cookie:", err);
+        return null;
+      }
+    }
+  }
+  return null;
+}
+
+function saveScheduleToCookie(schedule) {
+  try {
+    const now = new Date();
+    const thisYear = now.getFullYear();
+    let expireDate = new Date(`${thisYear}-08-01T00:00:00`);
+    if (now > expireDate) expireDate = new Date(`${thisYear + 1}-08-01T00:00:00`);
+
+    // Compress + encode (base64)
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(schedule))));
+
+    document.cookie = `${cookieName}=${encoded}; expires=${expireDate.toUTCString()}; path=/; Secure; SameSite=None`;
+    console.log("✅ Saved schedule to cookie:", schedule);
+  } catch (err) {
+    console.error("❌ Failed to save cookie:", err);
+  }
+}
+
   // 🧩 Initialize or read schedule cookie
   function initCookie() {
     let schedule = {};
@@ -33,22 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return schedule;
   }
-
-function saveScheduleToCookie(schedule) {
-  try {
-    const now = new Date();
-    const thisYear = now.getFullYear();
-    let expireDate = new Date(`${thisYear}-08-01T00:00:00`);
-    if (now > expireDate) expireDate = new Date(`${thisYear + 1}-08-01T00:00:00`);
-
-    const json = encodeURIComponent(JSON.stringify(schedule));
-    document.cookie = `${cookieName}=${json}; expires=${expireDate.toUTCString()}; path=/; SameSite=Lax`;
-    console.log("✅ Saved schedule to cookie:", schedule);
-  } catch (err) {
-    console.error("❌ Failed to save cookie:", err);
-  }
-}
-
 
   // 🎨 Apply schedule to buttons
   function applySchedule(schedule) {
