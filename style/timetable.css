@@ -46,16 +46,6 @@ body {
   border: none;
 }
 
-/* ✅ Sticky header row (day labels) */
-.timetable .header {
-  position: sticky;
-  top: 0; /* Stick to the top of the scroll area */
-  background-color: #ffffff; /* Match background */
-  z-index: 10; /* Stay above other cells */
-  font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
 /* ✅ Mobile adjustments */
 @media (max-width: 800px) {
   body {
