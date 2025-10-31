@@ -1,16 +1,26 @@
 // === popup.js ===
 
-// Wait until the page is ready
 document.addEventListener("DOMContentLoaded", () => {
   const popupOverlay = document.getElementById("popup-overlay");
   const popupClose = document.getElementById("popup-close");
 
-  // Attach event listeners to all timetable buttons
+  // Select all timetable buttons
   const buttons = document.querySelectorAll(".timetable button");
 
   buttons.forEach(button => {
     button.addEventListener("click", () => {
-      popupOverlay.style.display = "flex";
+      // ✅ Only open popup if the button has an ID
+      if (button.id && button.id.trim() !== "") {
+        popupOverlay.style.display = "flex";
+
+        // (Optional) update popup content dynamically
+        const popupContent = document.getElementById("popup-content");
+        popupContent.innerHTML = `
+          <h2>Slot Info</h2>
+          <p>You clicked on: <strong>${button.id}</strong></p>
+          <p>Edit this popup content in popup.js or timetable.html.</p>
+        `;
+      }
     });
   });
 
