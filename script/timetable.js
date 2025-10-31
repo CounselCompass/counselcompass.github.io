@@ -58,16 +58,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Load JSON data
-  async function loadData(url) {
-    try {
-      const response = await fetch(url);
-      const json = await response.json();
-      return Object.values(json).sort();
-    } catch (err) {
-      console.error("Failed to load JSON from", url, err);
-      return [];
-    }
+async function loadData(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const json = await response.json();
+    return Object.values(json).sort();
+  } catch (err) {
+    console.error("Failed to load JSON from", url, err);
+    return ["Error loading data"]; // fallback so popup isn’t empty
   }
+}
+
 
   // Sort teacher names by last word, then second-last, etc.
   function sortTeachers(teacherList) {
@@ -108,6 +110,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const colours = ["Red","Blue","Green","Yellow","Orange","Black","White","Brown","Grey","Cyan","Pink","Purple"];
 
       const prevSlot = schedule[day][time] || { subject: "-", room: "", teacher: "", colour: "" };
+
+      console.log("classList:", classList);
+      console.log("roomList:", roomList);
+      console.log("teacherList:", teacherList);
+
 
       const popupContent = document.getElementById("popup-content");
       popupContent.innerHTML = `
