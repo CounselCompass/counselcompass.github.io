@@ -6,21 +6,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const days = ["MON", "TUE", "WED", "THU", "FRI"];
   const times = ["0900","0940","1020","1040","1120","1200","1240","1320","1400","1440","1520"];
+  const dayNames = { MON: "Monday", TUE: "Tuesday", WED: "Wednesday", THU: "Thursday", FRI: "Friday" };
 
-  // Initialize or read schedule cookie
+  // 🧩 Initialize or read schedule cookie
   function initCookie() {
     let schedule = {};
     const cookie = document.cookie.split("; ").find(row => row.startsWith(cookieName + "="));
     if (cookie) {
       try {
         schedule = JSON.parse(decodeURIComponent(cookie.split("=")[1]));
-        console.log("Schedule loaded from cookie:", schedule);
+        console.log("✅ Schedule loaded from cookie");
       } catch (e) {
-        console.error("Failed to parse cookie, starting fresh.", e);
+        console.error("⚠️ Failed to parse cookie, starting fresh:", e);
       }
     }
 
-    // Ensure every slot exists
+    // Ensure all days/times exist
     days.forEach(day => {
       if (!schedule[day]) schedule[day] = {};
       times.forEach(time => {
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return schedule;
   }
 
-  // Save schedule to cookie (expires 1st August)
+  // 🍪 Save schedule to cookie (expires 1st August)
   function saveScheduleToCookie(schedule) {
     const now = new Date();
     const thisYear = now.getFullYear();
@@ -41,15 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.cookie = `${cookieName}=${encodeURIComponent(JSON.stringify(schedule))}; expires=${expireDate.toUTCString()}; path=/`;
   }
 
-  // Apply schedule to buttons
+  // 🎨 Apply schedule to buttons
   function applySchedule(schedule) {
     buttons.forEach(button => {
       if (!button.id) return;
-
       const time = button.id.substring(0, 4);
-      const day = button.id.slice(4);
-
-      const slot = schedule[day]?.[time];
+      const dayCode = button.id.slice(4);
+      const slot = schedule[dayCode]?.[time];
       if (slot) {
         button.textContent = slot.subject || "-";
         button.style.backgroundColor = slot.colour?.toLowerCase() || "";
@@ -57,39 +56,37 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Load JSON data
-async function loadData(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const json = await response.json();
-    return Object.values(json).sort();
-  } catch (err) {
-    console.error("Failed to load JSON from", url, err);
-    return ["Error loading data"]; // fallback so popup isn’t empty
+  // 📄 Load JSON data
+  async function loadData(url) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const json = await response.json();
+      return Object.values(json).sort();
+    } catch (err) {
+      console.error("Failed to load JSON from", url, err);
+      return ["Error loading data"];
+    }
   }
-}
 
-
-  // Sort teacher names by last word, then second-last, etc.
+  // 🧑‍🏫 Sort teacher names by last word
   function sortTeachers(teacherList) {
     return teacherList.sort((a, b) => {
       const aParts = a.split(" ").reverse();
       const bParts = b.split(" ").reverse();
-      const len = Math.max(aParts.length, bParts.length);
-      for (let i = 0; i < len; i++) {
-        const aPart = aParts[i] || "";
-        const bPart = bParts[i] || "";
-        if (aPart < bPart) return -1;
-        if (aPart > bPart) return 1;
+      for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
+        if ((aParts[i] || "") < (bParts[i] || "")) return -1;
+        if ((aParts[i] || "") > (bParts[i] || "")) return 1;
       }
       return 0;
     });
   }
 
+  // 🚀 Load initial schedule
   let schedule = initCookie();
   applySchedule(schedule);
 
+  // 🖱️ Add click listeners
   buttons.forEach(button => {
     button.addEventListener("click", async () => {
       if (!button.id || button.id.trim() === "") return;
@@ -97,8 +94,8 @@ async function loadData(url) {
       popupOverlay.style.display = "flex";
 
       const time = button.id.substring(0, 4);
-      const dayMap = { MON: "Monday", TUE: "Tuesday", WED: "Wednesday", THU: "Thursday", FRI: "Friday" };
-      const day = dayMap[button.id.slice(4)] || button.id.slice(4);
+      const dayCode = button.id.slice(4);
+      const dayName = dayNames[dayCode] || dayCode;
 
       const [classList, roomList, teacherListRaw] = await Promise.all([
         loadData("data/subject.json"),
@@ -109,16 +106,11 @@ async function loadData(url) {
       const teacherList = sortTeachers(teacherListRaw);
       const colours = ["Red","Blue","Green","Yellow","Orange","Black","White","Brown","Grey","Cyan","Pink","Purple"];
 
-      const prevSlot = schedule[day][time] || { subject: "-", room: "", teacher: "", colour: "" };
-
-      console.log("classList:", classList);
-      console.log("roomList:", roomList);
-      console.log("teacherList:", teacherList);
-
+      const prevSlot = schedule[dayCode][time] || { subject: "-", room: "", teacher: "", colour: "" };
 
       const popupContent = document.getElementById("popup-content");
       popupContent.innerHTML = `
-        <h2>${day} ${time.substring(0,2)}:${time.substring(2)}</h2>
+        <h2>${dayName} ${time.substring(0,2)}:${time.substring(2)}</h2>
 
         <label for="class-select">Class:</label>
         <select id="class-select">
@@ -143,6 +135,7 @@ async function loadData(url) {
         <button id="save-slot">Submit</button>
       `;
 
+      // 💾 Save slot when submitted
       document.getElementById("save-slot").addEventListener("click", () => {
         const selectedSlot = {
           subject: document.getElementById("class-select").value,
@@ -151,10 +144,8 @@ async function loadData(url) {
           colour: document.getElementById("colour-select").value
         };
 
-        // Save to schedule
-        schedule[day][time] = selectedSlot;
-
-        // Save cookie
+        // Save to schedule and cookie
+        schedule[dayCode][time] = selectedSlot;
         saveScheduleToCookie(schedule);
 
         // Update button immediately
@@ -166,7 +157,7 @@ async function loadData(url) {
     });
   });
 
-  // Close popup on clicking outside
+  // ❌ Close popup on outside click
   popupOverlay.addEventListener("click", (e) => {
     if (e.target === popupOverlay) popupOverlay.style.display = "none";
   });
