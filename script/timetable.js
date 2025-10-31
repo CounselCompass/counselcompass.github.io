@@ -1,3 +1,5 @@
+console.log("Script loaded!");
+
 document.getElementById("test").onclick = testFunc;
 
 // Chat GPT start
@@ -104,6 +106,8 @@ function formatToCookie(cookieJSON) {
 
 // --- Initialize cookie ---
 function initCookie() {
+  console.log("initCookie called");
+
     const cookieName = "class_schedule";
     let cookieValue = getCookie(cookieName);
 
