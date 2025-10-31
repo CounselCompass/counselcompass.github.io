@@ -91,3 +91,21 @@
   width: 60%;
   text-align: center;
 }
+
+
+/* Centered submit button styling */
+#popup-content .submit-button {
+  align-self: center;
+  background-color: #2823b5;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#popup-content .submit-button:hover {
+  background-color: #1a19a0;
+}
