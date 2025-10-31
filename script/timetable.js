@@ -1,101 +1,166 @@
-// Update every 1 hour (since days don’t change every second)
-setInterval(updateCountdown, 3600000);
-updateCountdown();
+document.addEventListener("DOMContentLoaded", () => {
+  const popupOverlay = document.getElementById("popup-overlay");
+  const buttons = document.querySelectorAll(".timetable button");
 
-// ------------------------------
-// Class Schedule Cookie Handler
-// ------------------------------
+  const cookieName = "timetable_schedule";
 
-// --- Cookie helpers ---
-function getCookie(name) {
-    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? match[2] : null;
-}
+  const days = ["MON", "TUE", "WED", "THU", "FRI"];
+  const times = ["0900","0940","1020","1040","1120","1200","1240","1320","1400","1440","1520"];
 
-function setCookie(name, value, days = 365) {
-    const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax`;
-}
-
-// --- Format functions ---
-function formatToJSON(cookieString) {
-    const cookieJSON = [];
-    const slotLength = 19; // 7+3+3+3+3
-    const slots = cookieString.match(new RegExp(`.{1,${slotLength}}`, "g")) || [];
-
-    for (let slot of slots) {
-        cookieJSON.push({
-            id: slot.substring(0, 7) || "NON",
-            subject: slot.substring(7, 10) || "NON",
-            teacher: slot.substring(10, 13) || "NON",
-            class: slot.substring(13, 16) || "NON",
-            colour: slot.substring(16, 19) || "NON"
-        });
+  // Initialize or read schedule cookie
+  function initCookie() {
+    let schedule = {};
+    const cookie = document.cookie.split("; ").find(row => row.startsWith(cookieName + "="));
+    if (cookie) {
+      try {
+        schedule = JSON.parse(decodeURIComponent(cookie.split("=")[1]));
+        console.log("Schedule loaded from cookie:", schedule);
+      } catch (e) {
+        console.error("Failed to parse cookie, starting fresh.", e);
+      }
     }
 
-    return cookieJSON;
-}
-
-function formatToCookie(cookieJSON) {
-    return cookieJSON.map(slot => 
-        `${slot.id || "NON"}${slot.subject || "NON"}${slot.teacher || "NON"}${slot.class || "NON"}${slot.colour || "NON"}`
-    ).join('');
-}
-
-// --- Initialize cookie ---
-function initCookie() {
-    try {
-        console.log("initCookie started");
-        const cookieName = "class_schedule";
-        let cookieValue = getCookie(cookieName);
-
-        if (!cookieValue || cookieValue === "") {
-            console.log("Cookie is empty, initializing...");
-
-            const days = ["MON", "TUE", "WED", "THU", "FRI"];
-            const times = ["0900", "0940", "1040", "1120", "1200", "1240", "1320", "1400", "1440", "1520"];
-            let initialValue = "";
-
-            for (let day of days) {
-                for (let time of times) {
-                    initialValue += `${time}${day}NONNONNONNON`;
-                }
-            }
-
-            setCookie(cookieName, initialValue);
-            cookieValue = initialValue;
-            console.log("Cookie initialized:", cookieValue);
-        } else {
-            console.log("Cookie already exists:", cookieValue);
+    // Ensure every slot exists
+    days.forEach(day => {
+      if (!schedule[day]) schedule[day] = {};
+      times.forEach(time => {
+        if (!schedule[day][time]) {
+          schedule[day][time] = { subject: "-", room: "", teacher: "", colour: "" };
         }
+      });
+    });
 
-        const scheduleJSON = formatToJSON(cookieValue);
-        console.log("Schedule JSON:", scheduleJSON);
-        return scheduleJSON;
+    return schedule;
+  }
 
-    } catch (err) {
-        console.error("Error in initCookie:", err);
-    }
-}
+  // Save schedule to cookie (expires 1st August)
+  function saveScheduleToCookie(schedule) {
+    const now = new Date();
+    const thisYear = now.getFullYear();
+    const expireDate = new Date(`${thisYear}-08-01T00:00:00`);
+    document.cookie = `${cookieName}=${encodeURIComponent(JSON.stringify(schedule))}; expires=${expireDate.toUTCString()}; path=/`;
+  }
 
-// --- Save JSON back to cookie ---
-function saveScheduleToCookie(scheduleJSON) {
+  // Apply schedule to buttons
+  function applySchedule(schedule) {
+    buttons.forEach(button => {
+      if (!button.id) return;
+
+      const time = button.id.substring(0, 4);
+      const day = button.id.slice(4);
+
+      const slot = schedule[day]?.[time];
+      if (slot) {
+        button.textContent = slot.subject || "-";
+        button.style.backgroundColor = slot.colour?.toLowerCase() || "";
+      }
+    });
+  }
+
+  // Load JSON data
+  async function loadData(url) {
     try {
-        const cookieName = "class_schedule";
-        const cookieString = formatToCookie(scheduleJSON);
-        setCookie(cookieName, cookieString);
-        console.log("Schedule saved to cookie:", cookieString);
+      const response = await fetch(url);
+      const json = await response.json();
+      return Object.values(json).sort();
     } catch (err) {
-        console.error("Error saving schedule:", err);
+      console.error("Failed to load JSON from", url, err);
+      return [];
     }
-}
+  }
 
-// --- Run on page load ---
-(function() {
-    console.log("Script loaded, initializing schedule...");
-    const schedule = initCookie();
+  // Sort teacher names by last word, then second-last, etc.
+  function sortTeachers(teacherList) {
+    return teacherList.sort((a, b) => {
+      const aParts = a.split(" ").reverse();
+      const bParts = b.split(" ").reverse();
+      const len = Math.max(aParts.length, bParts.length);
+      for (let i = 0; i < len; i++) {
+        const aPart = aParts[i] || "";
+        const bPart = bParts[i] || "";
+        if (aPart < bPart) return -1;
+        if (aPart > bPart) return 1;
+      }
+      return 0;
+    });
+  }
 
-    // Example: modify the first slot and save
-    // schedule[0].colour = "RED";
-    // saveScheduleToCookie(schedule);
-})();
+  let schedule = initCookie();
+  applySchedule(schedule);
+
+  buttons.forEach(button => {
+    button.addEventListener("click", async () => {
+      if (!button.id || button.id.trim() === "") return;
+
+      popupOverlay.style.display = "flex";
+
+      const time = button.id.substring(0, 4);
+      const dayMap = { MON: "Monday", TUE: "Tuesday", WED: "Wednesday", THU: "Thursday", FRI: "Friday" };
+      const day = dayMap[button.id.slice(4)] || button.id.slice(4);
+
+      const [classList, roomList, teacherListRaw] = await Promise.all([
+        loadData("data/subject.json"),
+        loadData("data/room.json"),
+        loadData("data/teacher.json")
+      ]);
+
+      const teacherList = sortTeachers(teacherListRaw);
+      const colours = ["Red","Blue","Green","Yellow","Orange","Black","White","Brown","Grey","Cyan","Pink","Purple"];
+
+      const prevSlot = schedule[day][time] || { subject: "-", room: "", teacher: "", colour: "" };
+
+      const popupContent = document.getElementById("popup-content");
+      popupContent.innerHTML = `
+        <h2>${day} ${time.substring(0,2)}:${time.substring(2)}</h2>
+
+        <label for="class-select">Class:</label>
+        <select id="class-select">
+          ${classList.map(c => `<option ${prevSlot.subject === c ? "selected" : ""}>${c}</option>`).join("")}
+        </select>
+
+        <label for="room-select">Room:</label>
+        <select id="room-select">
+          ${roomList.map(r => `<option ${prevSlot.room === r ? "selected" : ""}>${r}</option>`).join("")}
+        </select>
+
+        <label for="teacher-select">Teacher:</label>
+        <select id="teacher-select">
+          ${teacherList.map(t => `<option ${prevSlot.teacher === t ? "selected" : ""}>${t}</option>`).join("")}
+        </select>
+
+        <label for="colour-select">Colour:</label>
+        <select id="colour-select">
+          ${colours.map(col => `<option ${prevSlot.colour === col ? "selected" : ""}>${col}</option>`).join("")}
+        </select>
+
+        <button id="save-slot">Submit</button>
+      `;
+
+      document.getElementById("save-slot").addEventListener("click", () => {
+        const selectedSlot = {
+          subject: document.getElementById("class-select").value,
+          room: document.getElementById("room-select").value,
+          teacher: document.getElementById("teacher-select").value,
+          colour: document.getElementById("colour-select").value
+        };
+
+        // Save to schedule
+        schedule[day][time] = selectedSlot;
+
+        // Save cookie
+        saveScheduleToCookie(schedule);
+
+        // Update button immediately
+        button.textContent = selectedSlot.subject;
+        button.style.backgroundColor = selectedSlot.colour.toLowerCase();
+
+        popupOverlay.style.display = "none";
+      });
+    });
+  });
+
+  // Close popup on clicking outside
+  popupOverlay.addEventListener("click", (e) => {
+    if (e.target === popupOverlay) popupOverlay.style.display = "none";
+  });
+});
