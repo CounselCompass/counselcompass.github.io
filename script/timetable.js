@@ -75,15 +75,15 @@ function formatToJSON(cookie) {
   const into_classes = cookie.match(new RegExp(`.{1,${slotLength}}`, "g")) || [];
 
   for (let current_class = 0; current_class < into_classes.length; current_class++) {
-    const slot = into_classes[current_class];
-    cookie_json[current_class] = {
-      id: slot.substring(0, 7),
-      subject: slot.substring(7, 10),
-      teacher: slot.substring(10, 13),
-      class: slot.substring(13, 16),
-      colour: slot.substring(16, 19) || "NON" // default "NON" if missing
-    };
-  }
+  const slot = into_classes[current_class];
+  cookie_json[current_class] = {
+    id: slot.substring(0, 7),
+    subject: slot.substring(7, 10) || "NON",
+    teacher: slot.substring(10, 13) || "NON",
+    class: slot.substring(13, 16) || "NON",
+    colour: slot.substring(16, 19) || "NON"
+  };
+}
 
   return cookie_json;
 }
