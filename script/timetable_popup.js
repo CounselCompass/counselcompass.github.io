@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const popupOverlay = document.getElementById("popup-overlay");
-
   const buttons = document.querySelectorAll(".timetable button");
 
   // Function to fetch JSON and extract sorted values
@@ -8,12 +7,27 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(url);
       const json = await response.json();
-      // Extract values and sort alphabetically
-      return Object.values(json).sort();
+      return Object.values(json).sort(); // simple alphabetical sort
     } catch (err) {
       console.error("Failed to load JSON from", url, err);
       return [];
     }
+  }
+
+  // Sort teacher names by last word, then second-last, etc.
+  function sortTeachers(teacherList) {
+    return teacherList.sort((a, b) => {
+      const aParts = a.split(" ").reverse();
+      const bParts = b.split(" ").reverse();
+      const len = Math.max(aParts.length, bParts.length);
+      for (let i = 0; i < len; i++) {
+        const aPart = aParts[i] || "";
+        const bPart = bParts[i] || "";
+        if (aPart < bPart) return -1;
+        if (aPart > bPart) return 1;
+      }
+      return 0;
+    });
   }
 
   buttons.forEach(button => {
@@ -27,11 +41,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const day = dayMap[button.id.slice(4)] || button.id.slice(4);
 
         // Load external JSON data
-        const [classList, roomList, teacherList] = await Promise.all([
+        const [classList, roomList, teacherListRaw] = await Promise.all([
           loadData("data/subject.json"),
           loadData("data/room.json"),
           loadData("data/teacher.json")
         ]);
+
+        // Sort teachers by last word
+        const teacherList = sortTeachers(teacherListRaw);
 
         // Static colours
         const colours = ["Red", "Blue", "Green", "Yellow", "Orange", "Black", "White", "Brown", "Grey", "Cyan", "Pink", "Purple"];
