@@ -51,3 +51,19 @@
     margin-top: 25vh; /* ✅ slightly higher on mobile */
   }
 }
+
+/* Add spacing and styling inside popup */
+#popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#popup-content label {
+  font-weight: bold;
+}
+
+#popup-content select {
+  padding: 5px;
+  font-size: 14px;
+}
