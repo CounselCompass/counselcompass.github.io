@@ -30,18 +30,6 @@
   animation: popupSlideUp 0.35s ease;
 }
 
-/* Close button */
-.popup-close {
-  position: absolute;
-  top: 15px;
-  right: 25px;
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  cursor: pointer;
-  z-index: 1100;
-}
-
 /* Slide-up animation */
 @keyframes popupSlideUp {
   from {
