@@ -1,5 +1,3 @@
-console.log("Script loaded!");
-
 document.getElementById("test").onclick = testFunc;
 
 // Chat GPT start
@@ -143,11 +141,4 @@ function saveScheduleToCookie(scheduleJSON) {
     console.log("Schedule saved to cookie:", cookieString);
 }
 
-// --- Run on page load ---
-document.addEventListener("DOMContentLoaded", () => {
-    const schedule = initCookie();
-
-    // Example: Update the first slot's colour and save
-    // schedule[0].colour = "RED";
-    // saveScheduleToCookie(schedule);
-});
+const schedule = initCookie();
