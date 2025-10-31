@@ -34,13 +34,21 @@ document.addEventListener("DOMContentLoaded", () => {
     return schedule;
   }
 
-  // 🍪 Save schedule to cookie (expires 1st August)
-  function saveScheduleToCookie(schedule) {
+function saveScheduleToCookie(schedule) {
+  try {
     const now = new Date();
     const thisYear = now.getFullYear();
-    const expireDate = new Date(`${thisYear}-08-01T00:00:00`);
-    document.cookie = `${cookieName}=${encodeURIComponent(JSON.stringify(schedule))}; expires=${expireDate.toUTCString()}; path=/`;
+    let expireDate = new Date(`${thisYear}-08-01T00:00:00`);
+    if (now > expireDate) expireDate = new Date(`${thisYear + 1}-08-01T00:00:00`);
+
+    const json = encodeURIComponent(JSON.stringify(schedule));
+    document.cookie = `${cookieName}=${json}; expires=${expireDate.toUTCString()}; path=/; SameSite=Lax`;
+    console.log("✅ Saved schedule to cookie:", schedule);
+  } catch (err) {
+    console.error("❌ Failed to save cookie:", err);
   }
+}
+
 
   // 🎨 Apply schedule to buttons
   function applySchedule(schedule) {
@@ -110,30 +118,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const popupContent = document.getElementById("popup-content");
       popupContent.innerHTML = `
-        <h2>${dayName} ${time.substring(0,2)}:${time.substring(2)}</h2>
+  <h2>${dayName} ${time.substring(0,2)}:${time.substring(2)}</h2>
 
-        <label for="class-select">Class:</label>
-        <select id="class-select">
-          ${classList.map(c => `<option ${prevSlot.subject === c ? "selected" : ""}>${c}</option>`).join("")}
-        </select>
+  <label for="class-select">Class:</label>
+  <select id="class-select">
+    ${classList.map(c => `<option ${prevSlot.subject === c ? "selected" : ""}>${c}</option>`).join("")}
+  </select>
 
-        <label for="room-select">Room:</label>
-        <select id="room-select">
-          ${roomList.map(r => `<option ${prevSlot.room === r ? "selected" : ""}>${r}</option>`).join("")}
-        </select>
+  <label for="room-select">Room:</label>
+  <select id="room-select">
+    ${roomList.map(r => `<option ${prevSlot.room === r ? "selected" : ""}>${r}</option>`).join("")}
+  </select>
 
-        <label for="teacher-select">Teacher:</label>
-        <select id="teacher-select">
-          ${teacherList.map(t => `<option ${prevSlot.teacher === t ? "selected" : ""}>${t}</option>`).join("")}
-        </select>
+  <label for="teacher-select">Teacher:</label>
+  <select id="teacher-select">
+    ${teacherList.map(t => `<option ${prevSlot.teacher === t ? "selected" : ""}>${t}</option>`).join("")}
+  </select>
 
-        <label for="colour-select">Colour:</label>
-        <select id="colour-select">
-          ${colours.map(col => `<option ${prevSlot.colour === col ? "selected" : ""}>${col}</option>`).join("")}
-        </select>
+  <label for="colour-select">Colour:</label>
+  <select id="colour-select">
+    ${colours.map(col => `<option ${prevSlot.colour === col ? "selected" : ""}>${col}</option>`).join("")}
+  </select>
 
-        <button id="save-slot">Submit</button>
-      `;
+  <button id="save-slot" class="button-79" role="button">Submit</button>
+`;
+
 
       // 💾 Save slot when submitted
       document.getElementById("save-slot").addEventListener("click", () => {
