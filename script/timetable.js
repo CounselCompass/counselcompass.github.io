@@ -91,11 +91,11 @@ function formatToJSON(cookie) {
     return cookie_json;
 }
 
-function formatToCookie(cookie) {
+function formatToCookie(cookieJSON) {
     let cookie_string = "";
-    for (let slot = 0; slot < cookie.length; slot++) {
-        const colour = cookie[slot].colour || "NON";
-        const slot_string = `${cookie[slot].id}${cookie[slot].subject}${cookie[slot].teacher}${cookie[slot].class}${colour}`;
+    for (let slot of cookieJSON) {
+        const colour = slot.colour || "NON";
+        const slot_string = `${slot.id || "NON"}${slot.subject || "NON"}${slot.teacher || "NON"}${slot.class || "NON"}${colour}`;
         cookie_string += slot_string;
     }
     return cookie_string;
@@ -113,7 +113,6 @@ function initCookie() {
 
         for (let day of days) {
             for (let time of times) {
-                // Default slot: time + day + subject+teacher+class+colour all "NON"
                 const slot = `${time}${day}NONNONNONNON`; 
                 initialValue += slot;
             }
@@ -128,13 +127,22 @@ function initCookie() {
 
     // Convert cookie string to JSON immediately
     const scheduleJSON = formatToJSON(cookieValue);
-    console.log("Schedule JSON:", scheduleJSON);
-
     return scheduleJSON;
 }
 
-// Run on page load
+// --- Save JSON schedule back to cookie ---
+function saveScheduleToCookie(scheduleJSON) {
+    const cookieName = "class_schedule";
+    const cookieString = formatToCookie(scheduleJSON);
+    setCookie(cookieName, cookieString);
+    console.log("Schedule saved to cookie:", cookieString);
+}
+
+// --- Run on page load ---
 document.addEventListener("DOMContentLoaded", () => {
     const schedule = initCookie();
-    // Now `schedule` is a JSON array ready to use
+
+    // Example: Update the first slot's colour and save
+    // schedule[0].colour = "RED";
+    // saveScheduleToCookie(schedule);
 });
