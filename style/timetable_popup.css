@@ -16,6 +16,7 @@
 
 /* Popup box itself */
 .popup-box {
+  position: relative; /* ✅ Added: keeps the close button positioned properly */
   background-color: white;
   width: 90%;
   max-width: 500px;
@@ -36,6 +37,7 @@
   font-weight: bold;
   color: #333;
   cursor: pointer;
+  z-index: 1100; /* ensure it stays above popup content */
 }
 
 /* Fade-in animation */
