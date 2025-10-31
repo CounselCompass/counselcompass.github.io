@@ -3,6 +3,7 @@
 <head>
   <link rel="stylesheet" href="style/buttons.css">
   <link rel="stylesheet" href="style/timetable.css">
+  <link rel="stylesheet" href="style/timetable_popup.css">
 </head>
 <body>
 
@@ -105,6 +106,20 @@
 
   </div>
 
+  <div id="popup-overlay" class="popup-overlay">
+    <div class="popup-box">
+      <span id="popup-close" class="popup-close">&times;</span>
+
+      <!-- ✅ You can edit the content of the popup below -->
+      <div id="popup-content">
+        <h2>Popup Title</h2>
+        <p>Edit this section in timetable.html to add your own content.</p>
+      </div>
+      <!-- ✅ End editable content -->
+    </div>
+  </div>
+
   <script src="script/timetable.js" defer></script>
+  <script src="script/timetable_popup.js" defer></script>
 </body>
 </html>

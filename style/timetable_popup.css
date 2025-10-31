@@ -1,0 +1,60 @@
+/* === popup.css === */
+
+/* Dimmed background overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none; /* Hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Popup box itself */
+.popup-box {
+  background-color: white;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  border-radius: 10px;
+  padding: 20px;
+  overflow-y: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: popupFadeIn 0.3s ease;
+}
+
+/* Close button (X) */
+.popup-close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Fade-in animation */
+@keyframes popupFadeIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .popup-box {
+    width: 95%;
+    height: 85vh;
+    padding: 15px;
+  }
+}
