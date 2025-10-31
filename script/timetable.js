@@ -1,5 +1,3 @@
-document.getElementById("test").onclick = testFunc;
-
 // Chat GPT start
 function updateCountdown() {
   const countdownEl = document.getElementById('countdown');
