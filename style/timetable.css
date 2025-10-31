@@ -1,32 +1,31 @@
 /* === timetable.css === */
 
-/* Make page start at the top — remove centering */
+/* Base layout */
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
   display: flex;
-  justify-content: center; /* keep horizontal centering */
-  align-items: flex-start; /* ✅ start at top instead of center */
-  background-color: #f5f5f5; /* optional: background color */
+  justify-content: center;   /* Center horizontally on desktop */
+  align-items: flex-start;   /* ✅ Start at top */
+  background-color: #f5f5f5; /* Light background */
 }
 
 /* Timetable grid */
 .timetable {
   display: grid;
-  grid-template-columns: 150px repeat(5, 150px); /* time column + 5 weekdays */
+  grid-template-columns: 150px repeat(5, 150px); /* Time + 5 weekdays */
   gap: 5px;
   padding: 20px;
-  margin-top: 0; /* ✅ start at top */
-  background-color: #ffffff; /* optional: background for contrast */
-  border-radius: 10px;       /* optional: rounded corners */
-  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* optional: soft shadow */
+  margin-top: 0;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
   justify-content: center;
-  width: 100%;
   box-sizing: border-box;
 }
 
-/* Countdown display at top of timetable */
+/* Countdown display */
 .countdown {
   display: flex;
   justify-content: center;
@@ -34,25 +33,45 @@ body {
   font-weight: bold;
   font-size: 14px;
   color: #333;
-  height: 40px; /* roughly same height as buttons */
+  height: 40px;
 }
 
-/* Optional: make buttons fill their cells neatly */
+/* Button sizing */
 .timetable button {
   width: 100%;
   height: 60px;
   box-sizing: border-box;
 }
 
-/* Mobile tweaks */
-@media (max-width: 600px) {
+/* ✅ Mobile adjustments */
+@media (max-width: 800px) {
+  body {
+    justify-content: flex-start; /* Align to left on mobile */
+  }
+
   .timetable {
-    grid-template-columns: 100px repeat(5, 1fr);
+    grid-template-columns: 1fr 1fr 1fr; /* Fewer columns for smaller screens */
+    width: 100%;              /* ✅ Full width on mobile */
+    border-radius: 0;         /* Remove rounded corners for edge-to-edge look */
+    box-shadow: none;         /* Remove box shadow for clean mobile UI */
     padding: 10px;
+    gap: 4px;
   }
 
   .timetable button {
     height: 50px;
     font-size: 12px;
+  }
+
+  .countdown {
+    font-size: 12px;
+    height: 35px;
+  }
+}
+
+/* ✅ Extra small screens (optional) */
+@media (max-width: 500px) {
+  .timetable {
+    grid-template-columns: 1fr 1fr; /* Stack layout if too narrow */
   }
 }
