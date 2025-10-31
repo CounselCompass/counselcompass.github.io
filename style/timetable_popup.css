@@ -1,69 +1,87 @@
-/* === popup.css === */
-
-/* Dimmed background overlay */
-.popup-overlay {
+/* Popup overlay */
+#popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: none; /* Hidden by default */
+  background-color: rgba(0,0,0,0.5);
+  display: none;
   justify-content: center;
-  align-items: flex-start; /* We'll manually offset popup below */
+  align-items: flex-start; /* start near top */
+  padding-top: 80px; /* offset from top */
   z-index: 1000;
-  overflow-y: auto;
+  overflow-y: auto; /* scroll if content too tall */
 }
 
-/* Popup box */
-.popup-box {
-  position: relative; /* for the close button */
-  background-color: #fff;
-  width: 90%;
-  max-width: 500px;
-  max-height: 80vh;
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 30vh; /* ✅ starts just above the middle of the screen */
-  overflow-y: auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  animation: popupSlideUp 0.35s ease;
-}
-
-/* Slide-up animation */
-@keyframes popupSlideUp {
-  from {
-    transform: translateY(20%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Mobile tweaks */
-@media (max-width: 600px) {
-  .popup-box {
-    width: 95%;
-    height: 85vh;
-    padding: 15px;
-    margin-top: 25vh; /* ✅ slightly higher on mobile */
-  }
-}
-
-/* Add spacing and styling inside popup */
+/* Popup content box */
 #popup-content {
+  background-color: #ffffff; /* white background */
+  color: #2823b5; /* dark blue text */
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;       /* almost full width */
+  max-width: 400px; /* max width for larger screens */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;        /* more spacing for mobile */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+/* Header styling */
+#popup-content h2 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Labels */
 #popup-content label {
-  font-weight: bold;
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
+/* Dropdown styling - full width */
 #popup-content select {
-  padding: 5px;
-  font-size: 14px;
+  width: 100%; /* full width */
+  -webkit-appearance: none; /* remove native style */
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #ffffff;
+  border: 2px solid #2823b5;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  color: #2823b5;
+  cursor: pointer;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+/* Hover/focus effect */
+#popup-content select:focus {
+  outline: none;
+  border-color: #1a19a0; /* slightly darker blue */
+  box-shadow: 0 0 5px rgba(40, 35, 181, 0.5);
+}
+
+/* Custom down arrow for dropdown */
+#popup-content select {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12'><polygon points='0,0 12,0 6,6' style='fill:%232823b5;'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 12px;
+}
+
+/* Optional: smaller font on very small screens */
+@media (max-width: 350px) {
+  #popup-content h2 {
+    font-size: 16px;
+  }
+  #popup-content select {
+    font-size: 14px;
+    padding: 10px;
+  }
 }

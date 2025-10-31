@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Load external JSON data
         const [classList, roomList, teacherList] = await Promise.all([
           loadData("data/subject.json"),
-          loadData("data/rooms.json"),
+          loadData("data/room.json"),
           loadData("data/teacher.json")
         ]);
 
