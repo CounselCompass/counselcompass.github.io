@@ -7,7 +7,7 @@ body {
   height: 100vh;
   display: flex;
   justify-content: center;   /* Center horizontally on desktop */
-  align-items: flex-start;   /* ✅ Start at top */
+  /*align-items: flex-start;   /* ✅ Start at top */
   background-color: #f5f5f5; /* Light background */
 }
 
