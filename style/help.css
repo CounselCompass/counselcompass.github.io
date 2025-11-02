@@ -1,12 +1,16 @@
 body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #2823b5;
-      color: #333;
-      padding: 40px 20px;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-    }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #2823b5;
+  color: #333;
+  margin: 0;
+  padding: 40px 20px;
+  
+  /* Fix: make the layout vertical instead of centered */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 
     .container {
       max-width: 500px;
