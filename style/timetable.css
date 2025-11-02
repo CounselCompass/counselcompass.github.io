@@ -108,12 +108,13 @@ html, body {
 /* Timetable grid */
 .timetable {
   display: grid;
-  grid-template-columns: 80px repeat(5, 1fr); /* time column + 5 weekdays */
+  grid-template-columns: 80px repeat(5, 1fr); /* 80px for time, 5 columns for weekdays */
+  grid-auto-rows: 50px; /* each row 50px tall */
   gap: 2px;
-  padding: 20px;
   width: 100%;
   box-sizing: border-box;
 }
+
 
 .timetable .button-79 {
   display: flex;
@@ -124,11 +125,22 @@ html, body {
 }
 
 .timetable .header {
-  background-color: #332cf2; /* same as other buttons */
-  color: #ffffff; /* black text to match other buttons */
-  font-weight: bold;
+  background-color: #332cf2; /* from second snippet */
+  color: #ffffff;             /* from second snippet */
+  font-weight: bold;          /* keep from first snippet */
   border: 0;
+  display: flex;              /* keep from first snippet */
+  align-items: center;        /* keep from first snippet */
+  justify-content: center;    /* keep from first snippet */
+  cursor: pointer;            /* keep from first snippet */
+  transition: background 0.2s; /* keep from first snippet */
 }
+
+.timetable .header:nth-child(2) { grid-column: 2; }
+.timetable .header:nth-child(3) { grid-column: 3; }
+.timetable .header:nth-child(4) { grid-column: 4; }
+.timetable .header:nth-child(5) { grid-column: 5; }
+.timetable .header:nth-child(6) { grid-column: 6; }
 
 
 
@@ -159,4 +171,14 @@ html, body {
   border-radius: 8px;
   max-width: 500px;
   width: 90%;
+}
+
+.timetable button:first-child,
+.timetable button[id*="MON"],
+.timetable button[id*="TUE"],
+.timetable button[id*="WED"],
+.timetable button[id*="THU"],
+.timetable button[id*="FRI"] {
+  justify-content: flex-start; /* text on the left */
+  padding-left: 10px;
 }
