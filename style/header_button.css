@@ -1,4 +1,4 @@
-/* === Remove default page margins so header touches the top === */
+/* === Remove default margins so header touches the top === */
 html, body {
   margin: 0;
   padding: 0;
@@ -16,8 +16,9 @@ html, body {
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
-  /* Prevent header from being centered vertically with body flex */
-  align-self: stretch;
+
+  /* Make sure the header stays at the top even though body uses flex */
+  flex-shrink: 0;
 }
 
 /* === Button Styles === */
@@ -30,7 +31,7 @@ html, body {
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-family: Circular,Helvetica,sans-serif;
+  font-family: Circular, Helvetica, sans-serif;
   font-size: 1.125rem;
   font-weight: 700;
   letter-spacing: -.01em;
