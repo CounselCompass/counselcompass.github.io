@@ -67,7 +67,6 @@ html, body {
       height: 24px;
       margin-top: 8px;
       position: relative;
-      color: #ffffff;
     }
 
     /* Progress Bar Fill */
@@ -90,6 +89,7 @@ html, body {
       font-weight: 600;
       color: #222;
       user-select: none;
+      color: #ffffff;
     }
 
     @media (max-width: 480px) {
