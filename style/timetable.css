@@ -12,37 +12,79 @@ body {
   min-height: 100vh;
 }
 
-/* Header */
+/* === Remove default margins so header touches the top === */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* === Header Bar === */
 .header-bar {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #ffffff; /* white background */
+  padding: 15px 10px;
+
   display: flex;
-  justify-content: center;  /* center buttons horizontally */
-  align-items: center;      /* center buttons vertically */
+  justify-content: center;
+  align-items: center;
   gap: 20px;
-  height: 60px;
-  background-color: #2c3e50;
-  box-shadow: none;          /* remove shadow */
+  flex-wrap: wrap;
+
+  flex-shrink: 0; /* stays at the top */
 }
 
-.header-bar .button-79-link {
-  display: inline-flex;      /* use inline-flex for proper alignment */
-  align-items: center;       /* vertical center */
-  justify-content: center;   /* horizontal center */
-  padding: 12px 20px;        /* slightly adjusted vertical padding */
-  color: white;
-  background-color: #2823b5; /* updated blue */
-  border: none;
-  border-radius: 5px;
+/* === Button Styles === */
+.button-79-link {
+  backface-visibility: hidden;
+  background: #332cf2; /* original blue */
+  border: 0;
+  border-radius: .375rem;
+  box-sizing: border-box;
+  color: #fff;
   cursor: pointer;
+  display: inline-block;
+  font-family: Circular, Helvetica, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 50px;
+  text-align: center;
   text-decoration: none;
-  font-size: 16px;
-  line-height: 1;            /* ensures text is centered vertically */
+  transform: translateZ(0) scale(1);
+  transition: transform .2s, background .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 150px;
+  height: 50px;
 }
 
-.header-bar .button-79-link:hover {
-  background-color: #1f1a93; /* slightly darker blue on hover */
+.button-79-link:hover {
+  transform: scale(1.05);
+  background: #2a25d4; /* slightly darker on hover */
 }
 
+.button-79-link:active {
+  transform: translateY(.125rem);
+}
 
+/* === Mobile Responsiveness === */
+@media (max-width: 600px) {
+  .header-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .button-79-link {
+    width: 90%;
+    max-width: 300px;
+    font-size: 1rem;
+    line-height: 45px;
+    height: 45px;
+  }
+}
 
 /* Page layout */
 .page-container {
