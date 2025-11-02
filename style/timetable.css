@@ -1,188 +1,80 @@
-/* Reset & basics */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
+/* === timetable.css === */
 
+/* Base layout */
 body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* === Remove default margins so header touches the top === */
-html, body {
   margin: 0;
   padding: 0;
-}
-
-/* === Header Bar === */
-.header-bar {
-  width: 100%;
-  box-sizing: border-box;
-  background-color: #ffffff; /* white background */
-  padding: 15px 10px;
-
+  height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-
-  flex-shrink: 0; /* stays at the top */
+  justify-content: center;   /* Center horizontally on desktop */
+  align-items: flex-start;   /* ✅ Start at top */
+  background-color: #f5f5f5; /* Light background */
 }
 
-/* === Button Styles === */
-.button-79-link {
-  backface-visibility: hidden;
-  background: #332cf2; /* original blue */
-  border: 0;
-  border-radius: .375rem;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Circular, Helvetica, sans-serif;
-  font-size: 1.125rem;
-  font-weight: 700;
-  letter-spacing: -.01em;
-  line-height: 50px;
-  text-align: center;
-  text-decoration: none;
-  transform: translateZ(0) scale(1);
-  transition: transform .2s, background .2s;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: 150px;
-  height: 50px;
-}
-
-.button-79-link:hover {
-  transform: scale(1.05);
-  background: #2a25d4; /* slightly darker on hover */
-}
-
-.button-79-link:active {
-  transform: translateY(.125rem);
-}
-
-/* === Mobile Responsiveness === */
-@media (max-width: 600px) {
-  .header-bar {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .button-79-link {
-    width: 90%;
-    max-width: 300px;
-    font-size: 1rem;
-    line-height: 45px;
-    height: 45px;
-  }
-}
-
-/* Page layout */
-.page-container {
-  display: flex;
-  flex: 1; /* take remaining height */
-}
-
-/* Sidebar */
-.sidebar {
-  width: 200px; /* optional */
-  background-color: #ecf0f1;
-  padding: 20px;
-}
-
-/* Timetable container */
-.timetable-container {
-  flex-grow: 1;       /* take remaining width */
-  padding: 20px;
-}
-
-/* === Timetable container === */
+/* Timetable grid */
 .timetable {
   display: grid;
-  grid-template-columns: 80px repeat(5, 1fr); /* 80px for time column + 5 weekdays */
-  grid-auto-rows: 50px; /* each row 50px high */
-  gap: 2px;
-  width: 100%;
+  grid-template-columns: 150px repeat(5, 150px); /* Time + 5 weekdays */
+  gap: 5px;
+  padding: 20px;
+  margin-top: 0;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  justify-content: center;
   box-sizing: border-box;
-  padding: 20px;
+  overflow-y: auto; /* ✅ allow scrolling if content overflows */
+  max-height: 100vh; /* keep within viewport */
 }
 
-/* === Time column (first column) === */
-.timetable button.time {
-  justify-content: flex-start; /* align time text to left */
-  padding-left: 10px;
-  background-color: #f0f0f0;
-  font-weight: bold;
-  border: 1px solid #bdc3c7;
-}
-
-/* === Day headers === */
-.timetable .header {
-  background-color: #332cf2; /* same blue as buttons */
-  color: #fff;
-  font-weight: bold;
-  border: 1px solid #bdc3c7;
+/* Countdown display */
+.countdown {
   display: flex;
-  align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.timetable .header:hover {
-  background-color: #2a25d4;
-}
-
-/* === Other timetable cells === */
-.timetable .button-79 {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  border: 1px solid #bdc3c7;
-  background-color: #f7f7f7;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.timetable .button-79:hover {
-  background-color: #e0e0e0;
-}
-
-/* === Countdown row spans all columns === */
-#countdown {
-  grid-column: 1 / -1; /* span all columns */
-  text-align: center;
-  margin-bottom: 10px;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 14px;
+  color: #333;
+  height: 40px;
 }
 
-/* === Popup overlay === */
-#popup-overlay {
-  display: none; /* initially hidden */
-  position: fixed;
-  top: 0;
-  left: 0;
+/* Timetable buttons */
+.timetable button {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
+  height: 60px;
+  box-sizing: border-box;
+  border: none;
 }
 
-.popup-box {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 500px;
-  width: 90%;
+/* ✅ Mobile adjustments */
+@media (max-width: 800px) {
+  body {
+    justify-content: flex-start; /* Align to left on mobile */
+  }
+
+  .timetable {
+    grid-template-columns: 1fr 1fr 1fr; /* Fewer columns for smaller screens */
+    width: 100%;              /* ✅ Full width on mobile */
+    border-radius: 0;         /* Edge-to-edge look */
+    box-shadow: none;         /* Clean mobile UI */
+    padding: 10px;
+    gap: 4px;
+  }
+
+  .timetable button {
+    height: 50px;
+    font-size: 12px;
+  }
+
+  .countdown {
+    font-size: 12px;
+    height: 35px;
+  }
+}
+
+/* ✅ Extra small screens (optional) */
+@media (max-width: 500px) {
+  .timetable {
+    grid-template-columns: 1fr 1fr; /* Stack layout if too narrow */
+  }
 }
