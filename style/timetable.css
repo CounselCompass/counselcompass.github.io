@@ -124,10 +124,18 @@ html, body {
 }
 
 .timetable .header {
-  background-color: #34495e;
-  color: white;
+  background-color: #f7f7f7; /* same as other buttons */
+  color: #000; /* black text to match other buttons */
   font-weight: bold;
+  border: 1px solid #bdc3c7; /* same border as other buttons */
+  cursor: pointer; /* indicate clickable */
+  transition: background 0.2s; /* smooth hover transition */
 }
+
+.timetable .header:hover {
+  background-color: #e0e0e0; /* slightly darker on hover */
+}
+
 
 #countdown {
   grid-column: 1 / -1; /* span all columns */
