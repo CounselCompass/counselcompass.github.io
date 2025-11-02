@@ -125,7 +125,7 @@ html, body {
 
 .timetable .header {
   background-color: #332cf2; /* same as other buttons */
-  color: #000; /* black text to match other buttons */
+  color: #ffffff; /* black text to match other buttons */
   font-weight: bold;
   border: 0;
 }
