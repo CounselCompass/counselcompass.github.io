@@ -18,7 +18,7 @@ function updateCountdown() {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
 
-  countdownText.textContent = `Days until December 20: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+  countdownText.textContent = `Days until Christmas Holidays: ${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
 
 // Run immediately
