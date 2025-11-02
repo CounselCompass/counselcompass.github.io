@@ -1,6 +1,15 @@
+/* Header bar container */
+.header-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: #f4f4f4;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-
-/* CSS */
+/* Provided button styles */
 .button-79 {
   backface-visibility: hidden;
   background: #332cf2;
