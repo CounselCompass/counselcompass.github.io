@@ -1,37 +1,27 @@
 function updateCountdown() {
-      const countdownText = document.getElementById('countdown-text');
-      const progressBar = document.getElementById('progress-bar');
-      const progressText = document.getElementById('progress-text');
+  const countdownText = document.getElementById('countdown-text');
 
-      const now = new Date();
-      const currentYear = now.getUTCFullYear();
+  const now = new Date();
+  const currentYear = now.getFullYear();
 
-      // Target: Dec 20, 1:20 PM GMT
-      let targetDate = new Date(Date.UTC(currentYear, 11, 20, 13, 20, 0));
-      // Start date for progress bar: Nov 3, 00:00 GMT of current year
-      const startDate = new Date(); // Month 10 = Nov
+  // Target: December 20th, 00:00:00 of current year
+  let targetDate = new Date(currentYear, 11, 20, 0, 0, 0); // Month 11 = December
 
-      if (now > targetDate) {
-        targetDate = new Date(Date.UTC(currentYear + 1, 11, 20, 13, 20, 0));
-      }
+  // If December 20th has already passed this year, use next year
+  if (now > targetDate) {
+    targetDate = new Date(currentYear + 1, 11, 20, 0, 0, 0);
+  }
 
-      const totalSeconds = Math.floor((targetDate - now) / 1000);
-      const days = Math.floor(totalSeconds / 86400);
-      const hours = Math.floor((totalSeconds % 86400) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
+  const totalSeconds = Math.floor((targetDate - now) / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
-      countdownText.textContent =
-        `Days until Christmas Break: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+  countdownText.textContent = `Days until December 20: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
 
-      // Calculate progress % based on time elapsed since startDate
-      let totalDuration = targetDate - startDate;
-      let elapsed = now - startDate;
-      let progressPercent = Math.min(Math.max((elapsed / totalDuration) * 100, 0), 100);
-
-      progressBar.style.width = progressPercent + '%';
-      progressText.textContent = progressPercent.toFixed(1) + '%';
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+// Run immediately
+updateCountdown();
+// Update every second
+setInterval(updateCountdown, 1000);
