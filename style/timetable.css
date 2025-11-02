@@ -105,45 +105,59 @@ html, body {
   padding: 20px;
 }
 
-/* Timetable grid */
+/* === Timetable container === */
 .timetable {
   display: grid;
-  grid-template-columns: 80px repeat(5, 1fr); /* 80px for time, 5 columns for weekdays */
-  grid-auto-rows: 50px; /* each row 50px tall */
+  grid-template-columns: 80px repeat(5, 1fr); /* 80px for time column + 5 weekdays */
+  grid-auto-rows: 50px; /* each row 50px high */
   gap: 2px;
   width: 100%;
   box-sizing: border-box;
+  padding: 20px;
 }
 
+/* === Time column (first column) === */
+.timetable button.time {
+  justify-content: flex-start; /* align time text to left */
+  padding-left: 10px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  border: 1px solid #bdc3c7;
+}
 
+/* === Day headers === */
+.timetable .header {
+  background-color: #332cf2; /* same blue as buttons */
+  color: #fff;
+  font-weight: bold;
+  border: 1px solid #bdc3c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.timetable .header:hover {
+  background-color: #2a25d4;
+}
+
+/* === Other timetable cells === */
 .timetable .button-79 {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
   border: 1px solid #bdc3c7;
+  background-color: #f7f7f7;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.timetable .header {
-  background-color: #332cf2; /* from second snippet */
-  color: #ffffff;             /* from second snippet */
-  font-weight: bold;          /* keep from first snippet */
-  border: 0;
-  display: flex;              /* keep from first snippet */
-  align-items: center;        /* keep from first snippet */
-  justify-content: center;    /* keep from first snippet */
-  cursor: pointer;            /* keep from first snippet */
-  transition: background 0.2s; /* keep from first snippet */
+.timetable .button-79:hover {
+  background-color: #e0e0e0;
 }
 
-.timetable .header:nth-child(2) { grid-column: 2; }
-.timetable .header:nth-child(3) { grid-column: 3; }
-.timetable .header:nth-child(4) { grid-column: 4; }
-.timetable .header:nth-child(5) { grid-column: 5; }
-.timetable .header:nth-child(6) { grid-column: 6; }
-
-
-
+/* === Countdown row spans all columns === */
 #countdown {
   grid-column: 1 / -1; /* span all columns */
   text-align: center;
@@ -152,7 +166,7 @@ html, body {
   font-size: 1.2em;
 }
 
-/* Popup overlay */
+/* === Popup overlay === */
 #popup-overlay {
   display: none; /* initially hidden */
   position: fixed;
@@ -171,14 +185,4 @@ html, body {
   border-radius: 8px;
   max-width: 500px;
   width: 90%;
-}
-
-.timetable button:first-child,
-.timetable button[id*="MON"],
-.timetable button[id*="TUE"],
-.timetable button[id*="WED"],
-.timetable button[id*="THU"],
-.timetable button[id*="FRI"] {
-  justify-content: flex-start; /* text on the left */
-  padding-left: 10px;
 }
