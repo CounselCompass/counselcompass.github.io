@@ -9,7 +9,7 @@ function updateCountdown() {
       // Target: Dec 20, 1:20 PM GMT
       let targetDate = new Date(Date.UTC(currentYear, 11, 20, 13, 20, 0));
       // Start date for progress bar: Nov 3, 00:00 GMT of current year
-      const startDate = new Date(Date.UTC(currentYear, 10, 3, 0, 0, 0)); // Month 10 = Nov
+      const startDate = new Date(); // Month 10 = Nov
 
       if (now > targetDate) {
         targetDate = new Date(Date.UTC(currentYear + 1, 11, 20, 13, 20, 0));
