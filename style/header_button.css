@@ -1,16 +1,21 @@
-/* === Header Bar Container === */
+/* === Header Bar === */
 .header-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
   background-color: #f4f4f4;
   padding: 15px 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  /* Prevent header from being centered vertically with body flex */
+  align-self: stretch;
 }
 
-/* === Button Styles (from original .button-79, renamed) === */
+/* === Button Styles === */
 .button-79-link {
   backface-visibility: hidden;
   background: #332cf2;
@@ -49,13 +54,15 @@
 @media (max-width: 600px) {
   .header-bar {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
+    gap: 12px;
   }
 
   .button-79-link {
-    width: 100%;
+    width: 90%;
     max-width: 300px;
-    margin: 5px auto;
     font-size: 1rem;
+    line-height: 45px;
+    height: 45px;
   }
 }
