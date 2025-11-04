@@ -4,7 +4,7 @@
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: auto;
   display: flex;
   justify-content: center;   /* Center horizontally on desktop */
   /*align-items: flex-start;   /* ✅ Start at top */
@@ -69,12 +69,5 @@ body {
   .countdown {
     font-size: 12px;
     height: 35px;
-  }
-}
-
-/* ✅ Extra small screens (optional) */
-@media (max-width: 500px) {
-  .timetable {
-    grid-template-columns: 1fr 1fr; /* Stack layout if too narrow */
   }
 }
