@@ -1,0 +1,69 @@
+/* === Remove default margins so header touches the top === */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* === Header Bar === */
+.header-bar {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px 10px;
+
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* === Button Styles === */
+.button-79-link {
+  backface-visibility: hidden;
+  background: #332cf2;
+  border: 0;
+  border-radius: .375rem;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Circular, Helvetica, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  transform: translateZ(0) scale(1);
+  transition: transform .2s, background .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 150px;
+  height: 50px;
+}
+
+.button-79-link:hover {
+  transform: scale(1.05);
+  background: #2a25d4;
+}
+
+.button-79-link:active {
+  transform: translateY(.125rem);
+}
+
+/* === Mobile Responsiveness === */
+@media (max-width: 600px) {
+  .header-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .button-79-link {
+    width: 90%;
+    max-width: 300px;
+    font-size: 1rem;
+    line-height: 45px;
+    height: 45px;
+  }
+}
