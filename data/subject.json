@@ -42,5 +42,6 @@
     "PHY": "Physics",
     "ECO": "Economics",
     "BIO": "Biology",
-    "CHE": "Chemistry"
+    "CHE": "Chemistry",
+    "LUN": "Lunch Break"
 }
