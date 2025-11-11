@@ -168,28 +168,36 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
 
       // 💾 Save slot when submitted
-      document.getElementById("save-slot").addEventListener("click", () => {
-        const selectedSlot = {
-          subject: document.getElementById("class-select").value,
-          room: document.getElementById("room-select").value,
-          teacher: document.getElementById("teacher-select").value,
-          colour: document.getElementById("colour-select").value
-        };
+document.getElementById("save-slot").addEventListener("click", () => {
+  const selectedSlot = {
+    subject: document.getElementById("class-select").value,
+    room: document.getElementById("room-select").value,
+    teacher: document.getElementById("teacher-select").value,
+    colour: document.getElementById("colour-select").value
+  };
 
-        schedule[dayCode][time] = selectedSlot;
-        saveScheduleToStorage(schedule);
+  schedule[dayCode][time] = selectedSlot;
+  saveScheduleToStorage(schedule);
 
-        // Update button immediately
-        button.textContent = selectedSlot.subject;
-        button.style.backgroundColor = selectedSlot.colour.toLowerCase();
-        if (["white", "yellow", "cyan", "#ffffff", "#ffff00", "#00ffff"].includes(colour)) {
-          button.style.color = "black";
-        } else {
-          button.style.color = "white";
-        }
+  // Update button immediately
+  const colour = selectedSlot.colour.toLowerCase();
+  button.textContent = selectedSlot.subject;
+  button.style.backgroundColor = colour;
+  if (["white", "yellow", "cyan", "#ffffff", "#ffff00", "#00ffff"].includes(colour)) {
+    button.style.color = "black";
+  } else {
+    button.style.color = "white";
+  }
 
-        popupOverlay.style.display = "none";
-      });
+  popupOverlay.style.display = "none";
+});
+
+// ✨ Make dropdowns searchable
+new Choices("#class-select", { searchEnabled: true, itemSelectText: "" });
+new Choices("#room-select", { searchEnabled: true, itemSelectText: "" });
+new Choices("#teacher-select", { searchEnabled: true, itemSelectText: "" });
+new Choices("#colour-select", { searchEnabled: true, itemSelectText: "" });
+
     });
   });
 
