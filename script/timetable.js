@@ -182,7 +182,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Update button immediately
         button.textContent = selectedSlot.subject;
         button.style.backgroundColor = selectedSlot.colour.toLowerCase();
-        button.style.color = "white";
+        if (["white", "yellow", "cyan", "#ffffff", "#ffff00", "#00ffff"].includes(colour)) {
+          button.style.color = "black";
+        } else {
+          button.style.color = "white";
+        }
 
         popupOverlay.style.display = "none";
       });
