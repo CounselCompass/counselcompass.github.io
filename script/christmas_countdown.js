@@ -5,7 +5,7 @@ function updateCountdown() {
   const currentYear = now.getFullYear();
 
   // Target: December 20th, 00:00:00 of current year
-  let targetDate = new Date(currentYear, 11, 20, 0, 0, 0); // Month 11 = December
+let targetDate = new Date(currentYear, 11, 19, 13, 20, 0);
 
   // If December 20th has already passed this year, use next year
   if (now > targetDate) {
