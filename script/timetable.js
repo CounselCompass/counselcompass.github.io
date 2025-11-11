@@ -61,8 +61,15 @@ function applySchedule(schedule) {
     if (slot) {
       button.textContent = slot.subject !== "NON" ? slot.subject : "-";
       if (slot.colour && slot.colour !== "NON") {
-        button.style.backgroundColor = slot.colour.toLowerCase();
-        button.style.color = "white";
+        const colour = slot.colour.toLowerCase();
+        button.style.backgroundColor = colour;
+
+        // Use black text for light background colours
+        if (["white", "yellow", "cyan", "#ffffff", "#ffff00", "#00ffff"].includes(colour)) {
+          button.style.color = "black";
+        } else {
+          button.style.color = "white";
+        }
       } else {
         button.style.backgroundColor = "";
         button.style.color = "";
@@ -70,6 +77,7 @@ function applySchedule(schedule) {
     }
   });
 }
+
 
 // --- Load external JSON ---
 async function loadData(url) {
