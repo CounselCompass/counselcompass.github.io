@@ -14,65 +14,41 @@
   overflow-y: auto; /* scroll if content too tall */
 }
 
-/* Popup content box */
-#popup-content {
-  background-color: #ffffff; /* white background */
-  color: #2823b5; /* dark blue text */
-  padding: 20px;
-  border-radius: 12px;
-  width: 90%;       /* almost full width */
-  max-width: 400px; /* max width for larger screens */
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;        /* more spacing for mobile */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
-
-/* Header styling */
-#popup-content h2 {
-  margin: 0 0 10px 0;
-  font-size: 18px;
-  font-weight: 600;
-  text-align: center;
-}
-
-/* Labels */
-#popup-content label {
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-/* Dropdown styling - full width */
+/* Dropdown styling - full width, rounded and smooth */
 #popup-content select {
-  width: 100%; /* full width */
-  -webkit-appearance: none; /* remove native style */
+  width: 100%;
+  -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   background-color: #ffffff;
-  border: 2px solid #2823b5;
-  border-radius: 8px;
-  padding: 12px;
+  border: 2px solid #5c59d4; /* softer blue border */
+  border-radius: 999px; /* fully rounded (pill-shaped) */
+  padding: 12px 40px 12px 16px; /* extra right padding for arrow */
   font-size: 16px;
   color: #2823b5;
   cursor: pointer;
-  transition: border 0.2s, box-shadow 0.2s;
+  transition: border 0.2s, box-shadow 0.2s, background-color 0.2s;
   box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(40, 35, 181, 0.1); /* subtle shadow for depth */
 }
 
 /* Hover/focus effect */
+#popup-content select:hover {
+  background-color: #f8f8ff; /* faint background tint */
+}
+
 #popup-content select:focus {
   outline: none;
-  border-color: #1a19a0; /* slightly darker blue */
-  box-shadow: 0 0 5px rgba(40, 35, 181, 0.5);
+  border-color: #1a19a0;
+  box-shadow: 0 0 6px rgba(40, 35, 181, 0.4);
 }
 
 /* Custom down arrow for dropdown */
 #popup-content select {
-  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12'><polygon points='0,0 12,0 6,6' style='fill:%232823b5;'/></svg>");
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14'><polygon points='0,0 14,0 7,7' style='fill:%232823b5;'/></svg>");
   background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 12px 12px;
+  background-position: right 14px center;
+  background-size: 14px 14px;
 }
 
 /* Optional: smaller font on very small screens */
