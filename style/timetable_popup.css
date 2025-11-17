@@ -22,6 +22,7 @@
   border-radius: 12px;
   width: 90%;       /* almost full width */
   max-width: 400px; /* max width for larger screens */
+  min-width: 280px; /* or whatever size you want */
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
