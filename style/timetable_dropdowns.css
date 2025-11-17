@@ -13,6 +13,7 @@
   border-radius: 999px !important; /* full pill curve */
   padding: 10px 16px !important;
   min-height: 48px;
+  max-width: 300px;
   box-shadow: 0 2px 6px rgba(40, 35, 181, 0.10);
   font-size: 16px;
   color: #2823b5 !important;
